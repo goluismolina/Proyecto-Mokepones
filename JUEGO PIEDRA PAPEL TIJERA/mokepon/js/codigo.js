@@ -1,6 +1,6 @@
 //Variable de ataque
-let ataqueJugador;
-let ataqueEnemigo;
+let ataqueJugador
+let ataqueEnemigo
 
 // Funcion que da arranque al juego, escuchando la seleccion del jugador
 function inicioJuego (){
@@ -8,11 +8,13 @@ function inicioJuego (){
     let botonMascotas = document.getElementById('boton-mascota');
     botonMascotas.addEventListener('click' , seleccionMascota);
 
-    let botonFuego = document.getElementById("boton-fuego");
+    let botonFuego = document.getElementById("fuego");
     botonFuego.addEventListener("click", ataqueFuego )
-    let botonAgua = document.getElementById("boton-agua");
+
+    let botonAgua = document.getElementById("agua");
     botonAgua.addEventListener("click", ataqueAgua )
-    let botonTierra = document.getElementById("boton-tierra");
+
+    let botonTierra = document.getElementById("tierra");
     botonTierra.addEventListener("click", ataqueTierra )
 }
 
@@ -57,17 +59,17 @@ function numerosAleatorios( max , min ) {
 }
 
 function ataqueFuego (){
-    let ataqueJugador = "FUEGO";
+     ataqueJugador = "FUEGO";
     ataqueAleatorioEnemigo()
 }
 
 function ataqueAgua (){
-    let ataqueJugador = "AGUA";
+     ataqueJugador = "AGUA";
     ataqueAleatorioEnemigo()
 }
 
 function ataqueTierra (){
-    let ataqueJugador = "TIERRA";
+     ataqueJugador = "TIERRA";
     ataqueAleatorioEnemigo()
 }
 
@@ -75,12 +77,38 @@ function ataqueAleatorioEnemigo() {
     let ataqueAleatorio = numerosAleatorios ( 3 , 1 );
 
     if ( ataqueAleatorio == 1 ){
-        ataqueEnemigo = " FUEGO "
+        ataqueEnemigo = "FUEGO"
     } else if ( ataqueAleatorio == 2 ){
-        ataqueEnemigo = " AGUA "
+        ataqueEnemigo = "AGUA"
     } else {
-        ataqueEnemigo = " TIERRA "
+        ataqueEnemigo = "TIERRA"
+    }
+
+    combate()
+}
+
+function combate (){
+    if (ataqueEnemigo == ataqueJugador){
+        crearMensaje(" Empate🫱🫲");
+    } else if (ataqueEnemigo == "TIERRA" && ataqueJugador == "FUEGO"){
+        crearMensaje(" Ganaste✅");
+    } else if (ataqueEnemigo == "FUEGO" && ataqueJugador == "AGUA" ){
+        crearMensaje(" Ganaste✅");
+    }  else if (ataqueEnemigo == "AGUA" && ataqueJugador == "TIERRA" ){
+        crearMensaje(" Ganaste✅");
+    } else {
+        crearMensaje(" Perdiste❌");
     }
 }
+
+function crearMensaje(resultado) {
+    let sectionMensajes = document.getElementById("mensajes")
+
+    let parrafo = document.createElement("p")
+    parrafo.innerHTML = "Tu macota ataco con " + ataqueJugador + " La mascota del enemigo ataco con " + ataqueEnemigo + resultado
+
+    sectionMensajes.appendChild(parrafo)
+}
+
 // Evento que indica la lectura de la pagina y despues lanza la funcion del juego.
 window.addEventListener( "load" , inicioJuego );
